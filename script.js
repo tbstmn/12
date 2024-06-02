@@ -10,6 +10,7 @@ hamburger.addEventListener('click', () => {
 let randomPicture;
 
 let currentID;
+let currentIDNumber;
 
 function getRandomPicture(params) {
   const randomNumber = Math.floor(Math.random() * images.length);
@@ -96,8 +97,12 @@ function scanBarcodeFromImage(dataUrl, event) {
   );
 }
 
-function startScanner() {
+function startScanner(event) {
   // Get list of available video devices
+  currentID = `picture-${event.target.getAttribute('data-box')}`;
+  console.log(event.target);
+  console.log(currentID);
+  modal.style.display = 'block';
   navigator.mediaDevices.enumerateDevices().then((devices) => {
     const videoDevices = devices.filter((device) => device.kind === 'videoinput');
     const lastDeviceId = videoDevices[videoDevices.length - 1].deviceId;
@@ -146,6 +151,7 @@ function startScanner() {
     // Add event listener for when a barcode is detected
     Quagga.onDetected((data) => {
       console.log(`Barcode detected and processed: ${data.codeResult.code}`);
+      replaceImage();
       // Do something with the scanned barcode, e.g., display it
       alert(`Scanned barcode: ${data.codeResult.code}`);
     });
@@ -159,12 +165,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const btn = document.getElementById('picture-1');
   const span = document.getElementsByClassName('close')[0];
 
-  btn.onclick = function (event) {
-    modal.style.display = 'block';
-    // startCameraScan(currentDeviceId, event);
-    startScanner();
-    console.log(event);
-  };
+  // btn.onclick = function (event) {
+  //   modal.style.display = 'block';
+  //   // startCameraScan(currentDeviceId, event);
+  //   startScanner();
+  //   console.log(event.target.getAttribute('data-box'));
+  //   console.log(event);
+  //   currentIDNumber = event.target.getAttribute('data-box');
+  // };
 
   span.onclick = function () {
     modal.style.display = 'none';
