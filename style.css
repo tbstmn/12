@@ -184,10 +184,10 @@ canvas.drawingBuffer {
   left: 0;
   top: 0;
 }
-#controls {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+
+canvas.drawingBuffer {
+    width: 80%;
+    max-width: 500px;
 }
 
 .box {
