@@ -51,17 +51,6 @@ function checkForBarcodeImage(event) {
   }
 }
 
-// document.getElementById('file-input').addEventListener('change', (event) => {
-//   const file = event.target.files[0];
-//   if (file) {
-//     const reader = new FileReader();
-//     reader.onload = function (e) {
-//       scanBarcodeFromImage(e.target.result);
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// });
-
 function scanBarcodeFromImage(dataUrl, event) {
   Quagga.decodeSingle(
     {
@@ -88,10 +77,9 @@ function scanBarcodeFromImage(dataUrl, event) {
       if (result && result.codeResult) {
         console.log(currentID);
         replaceImage();
-        document.getElementById('scanned-code').textContent = result.codeResult.code;
         handleScannedCode(result.codeResult.code);
       } else {
-        document.getElementById('scanned-code').textContent = 'No barcode detected.';
+        alert('No code detected!');
       }
     },
   );
@@ -152,8 +140,9 @@ function startScanner(event) {
     Quagga.onDetected((data) => {
       console.log(`Barcode detected and processed: ${data.codeResult.code}`);
       replaceImage();
+      Quagga.stop();
       // Do something with the scanned barcode, e.g., display it
-      alert(`Scanned barcode: ${data.codeResult.code}`);
+      // alert(`Scanned barcode: ${data.codeResult.code}`);
     });
   }).catch((err) => {
     console.error(err);
