@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    width: 200px;
+    min-height: calc(100vh - 120px); /* Adjust based on header and footer height */
+    position: fixed;
+    top: 70px; /* Adjust based on header height */
+    bottom: 60px; /* Adjust based on footer height */
+    overflow-y: auto;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navbar li {
+    padding: 1rem;
+}
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: #575757;
+}
+
+.content {
+    margin-left: 200px; /* Same width as the navbar */
+    padding: 1rem;
+    flex-grow: 1;
+    background-color: #f1f1f1;
+    overflow-y: auto;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+        position: fixed;
+        top: 60px; /* Adjust based on header height */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        overflow-y: auto;
+    }
+
+    .navbar.active {
+        display: block;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 60px; /* Adjust this value based on the navbar height */
+    }
+}

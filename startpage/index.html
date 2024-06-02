@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barcode Scanner</title>
+    <style>
+      #scanner-container {
+        background-color: green;
+      }
+      #scanner > video {
+        width: 100%;
+        height: 100%;
+      }
+
+      #scanner > canvas.drawing,
+      canvas.drawingBuffer {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      #controls {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scanner-container">
+      <div id="scanner"></div>
+      <div id="controls">
+        <button id="start-camera">Start Camera</button>
+        <button id="stop-camera" style="display: none">Stop Camera</button>
+        <button id="change-camera" style="display: none">Change Camera</button>
+        <input type="file" id="file-input" accept="image/*" />
+        <p>Scanned Code: <span id="scanned-code"></span></p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script>
+      let currentDeviceId = null;
+      let devices = [];
+
+      async function getCameras() {
+        const deviceList = await navigator.mediaDevices.enumerateDevices();
+        devices = deviceList.filter((device) => device.kind === "videoinput");
+        if (devices.length > 0) {
+          currentDeviceId = devices[0].deviceId;
+        }
+      }
+
+      document
+        .getElementById("start-camera")
+        .addEventListener("click", function () {
+          startCameraScan(currentDeviceId);
+          document.getElementById("start-camera").style.display = "none";
+          document.getElementById("stop-camera").style.display = "inline";
+          document.getElementById("change-camera").style.display = "inline";
+        });
+
+      document
+        .getElementById("stop-camera")
+        .addEventListener("click", function () {
+          Quagga.stop();
+          document.getElementById("start-camera").style.display = "inline";
+          document.getElementById("stop-camera").style.display = "none";
+          document.getElementById("change-camera").style.display = "none";
+        });
+
+      document
+        .getElementById("change-camera")
+        .addEventListener("click", function () {
+          const currentIndex = devices.findIndex(
+            (device) => device.deviceId === currentDeviceId
+          );
+          currentDeviceId =
+            devices[(currentIndex + 1) % devices.length].deviceId;
+          Quagga.stop();
+          startCameraScan(currentDeviceId);
+        });
+
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              scanBarcodeFromImage(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      function startCameraScan(deviceId) {
+        Quagga.init(
+          {
+            inputStream: {
+              type: "LiveStream",
+              constraints: {
+                width: 640,
+                height: 480,
+                deviceId: deviceId ? { exact: deviceId } : undefined,
+              },
+              target: document.querySelector("#scanner"),
+            },
+            decoder: {
+              readers: [
+                "code_128_reader",
+                "ean_reader",
+                "ean_8_reader",
+                "code_39_reader",
+                "code_39_vin_reader",
+                "codabar_reader",
+                "upc_reader",
+                "upc_e_reader",
+                "i2of5_reader",
+              ],
+            },
+          },
+          function (err) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            Quagga.start();
+          }
+        );
+
+        Quagga.onDetected(function (data) {
+          document.getElementById("scanned-code").textContent =
+            data.codeResult.code;
+          Quagga.stop();
+          document.getElementById("start-camera").style.display = "inline";
+          document.getElementById("stop-camera").style.display = "none";
+          document.getElementById("change-camera").style.display = "none";
+        });
+      }
+
+      function scanBarcodeFromImage(dataUrl) {
+        Quagga.decodeSingle(
+          {
+            src: dataUrl,
+            numOfWorkers: 0, // Needs to be 0 when used within a Node environment
+            inputStream: {
+              size: 800, // restrict input-size to be 800px in width (long-side)
+            },
+            decoder: {
+              readers: [
+                "code_128_reader",
+                "ean_reader",
+                "ean_8_reader",
+                "code_39_reader",
+                "code_39_vin_reader",
+                "codabar_reader",
+                "upc_reader",
+                "upc_e_reader",
+                "i2of5_reader",
+              ],
+            },
+          },
+          function (result) {
+            if (result && result.codeResult) {
+              document.getElementById("scanned-code").textContent =
+                result.codeResult.code;
+            } else {
+              document.getElementById("scanned-code").textContent =
+                "No barcode detected.";
+            }
+          }
+        );
+      }
+
+      getCameras();
+    </script>
+  </body>
+</html>

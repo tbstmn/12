@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+    <!-- LOGIN FORM START -->
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+    <div class="login-container">
+      <h2>Scanvengers</h2>
+      <div class="form-group">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          placeholder="Username"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="Password"
+        />
+      </div>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="remember-me" name="remember-me" />
+        <label for="remember-me">Remember me</label>
+      </div>
+      <div class="form-group">
+        <button type="submit" id="btnLogin">Login</button>
+      </div>
+      <div class="signup-link">
+        No account yet? <a href="#" id="signup-link">Sign up!</a>
+      </div>
+    </div>
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+    <!-- LOGIN FORM END -->
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+
+        <h2>Register</h2>
+        <div class="form-group">
+          <input
+            type="text"
+            id="new-username"
+            name="new-username"
+            required
+            placeholder="Username"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="new-password"
+            name="new-password"
+            required
+            placeholder="Password"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="new-password-repeat"
+            name="password"
+            required
+            placeholder="Repeat Password"
+          />
+        </div>
+        <button id="create-account">Create Account</button>
+      </div>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>

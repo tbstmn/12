@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcode Scanner</title>
+<!-- Include QuaggaJS library -->
+<script src="https://cdn.jsdelivr.net/npm/quagga"></script>
+</head>
+<body>
+
+<div id="barcodeScanner" style="width: 100%;"></div>
+
+<script>
+// Initialize QuaggaJS
+Quagga.init({
+  inputStream : {
+    name : "Live",
+    type : "LiveStream",
+    target: document.querySelector('#barcodeScanner'), // This is where the live video will be rendered
+    constraints: {
+      width: 640,
+      height: 480,
+      facingMode: "environment" // Use the device's rear camera
+    },
+  },
+  decoder : {
+    readers : ["ean_reader"] // Specify the barcode format you want to read, e.g., EAN
+  }
+}, function(err) {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log("Initialization finished. Ready to start");
+    Quagga.start(); // Start the live stream
+});
+
+// Add event listener for when a barcode is detected
+Quagga.onDetected(function(data) {
+    console.log("Barcode detected and processed: " + data.codeResult.code);
+    // Do something with the scanned barcode, e.g., display it
+    alert("Scanned barcode: " + data.codeResult.code);
+});
+</script>
+
+</body>
+</html>

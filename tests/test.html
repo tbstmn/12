@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/c027eb9e67.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>SCANVENGERS</title>
+  </head>
+  <body>
+    <i class="fa fa-bars" aria-hidden="true" id="hamburger"></i>
+    <div class="navbar" id="navbar">
+      <!-- <h2>Scanvengers</h2> -->
+      <div class="navbar-places">
+        <h3>Places</h3>
+        <ul>
+          <li><a href="#">Gathering Hall</a></li>
+          <li><a href="#">Hatchery</a></li>
+          <li><a href="#">Stash</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+        </ul>
+      </div>
+      <div class="navbar-activities">
+        <h3>Activities</h3>
+        <ul>
+          <li><a href="#">Woodcutting</a></li>
+          <li><a href="#">Mining</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+          <li><a href="#">???</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="header">
+      <div class="profile"><p>Profile</p></div>
+      <div class="location">
+        <p>Hatchery</p>
+      </div>
+      <div class="stash">
+        <p>Idk</p>
+      </div>
+    </div>
+
+    <div class="hatchery">
+     
+      </div>
+    </div>
+    <div class="main-content">
+     <div class="hatchery-content">
+      <div class="hatchery-boxes">
+        <div class="box">
+          <h5>Get Egg</h5>
+          <div class="egg-picture-container">
+                <div class="egg-picture" id="picture-container-1">          
+            <!-- <img src="/assests/images/Eggs/Black.png" alt=""> -->
+            <i class="fa fa-camera" aria-hidden="true" id="picture-1"></i>
+          </div>
+          </div>
+          <label for="file-input1"><i class="fa fa-upload" aria-hidden="true"></i></label>
+          <input type="file" id="file-input1" accept="image/*" value="1"  onchange="checkForBarcodeImage(event)"/>
+
+
+        </div>
+        <div class="box">
+           <h5>Get Egg</h5>
+          <div class="egg-picture-container">
+                      <div class="egg-picture" data-box="picture-container-2">          
+            <!-- <img src="/assests/images/Eggs/Black.png" alt=""> -->
+            <i class="fa fa-camera" aria-hidden="true" id="picture-2"></i>
+          </div>
+          </div>
+          <label for="file-input2"><i class="fa fa-upload" aria-hidden="true"></i></label>
+          <input type="file" id="file-input2" accept="image/*"  value='2' onchange="checkForBarcodeImage(event)" />
+
+        </div>
+        <div class="box"><h3>Egg</h3></div>
+        <div class="box"><h3>Egg</h3></div>
+        <div class="box"><h3>Egg</h3></div>
+        <div class="box"><h3>Egg</h3></div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+           <div id="scanner-container">
+        <div id="scanner"></div>
+          <div id="controls">
+            <button id="start-camera">Start Camera</button>
+            <button id="stop-camera" style="display: none">Stop Camera</button>
+            <button id="change-camera" style="display: none">
+              Change Camera
+            </button>
+            <input type="file" id="file-input" accept="image/*" />
+            <p>Scanned Code: <span id="scanned-code"></span></p>
+          </div>
+     </div>
+            <span class="close">&times;</span>
+            <p>This is a responsive modal!</p>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="profile"><p>Idk</p></div>
+      <div class="location">
+        <p>Backpack</p>
+      </div>
+      <div class="misc">
+        <div>
+          <p class="clock" id="clock"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
